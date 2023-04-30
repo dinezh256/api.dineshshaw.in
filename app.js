@@ -6,21 +6,10 @@ const cors = require("cors");
 
 const userRoutes = require("./routes/users");
 const authRoutes = require("./routes/auth");
+const dbConnection = require("./database");
 
 const app = express();
-
-mongoose.connect(process.env.MONGODB_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-
-mongoose.connection.on("connected", () => {
-  console.log("connected to mongodb");
-});
-
-mongoose.connection.on("error", (err) => {
-  console.log("error", err);
-});
+dbConnection();
 
 app.use(express.json());
 app.use(cors());
