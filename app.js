@@ -1,7 +1,6 @@
 require("dotenv").config();
 
 const express = require("express");
-const mongoose = require("mongoose");
 const cors = require("cors");
 
 const userRoutes = require("./routes/users");
@@ -14,10 +13,8 @@ dbConnection();
 app.use(express.json());
 app.use(cors());
 
-app.get("/", (req, res) => {
-  res.send(
-    `<h4 style="font-family: sans-serif;">Is alive at ${new Date().toUTCString()}</h4>`
-  );
+app.get("/", (_, res) => {
+  res.sendFile(__dirname + "/index.html");
 });
 
 app.use("/api/signup", userRoutes);
