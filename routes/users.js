@@ -1,11 +1,11 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 
-const { User, validate } = require('../models/user');
+const { User, validate } = require("../models/user");
 
 const router = express.Router();
 
-router.post('/', async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     const { error } = validate(req.body);
     if (error) {
@@ -17,16 +17,16 @@ router.post('/', async (req, res) => {
     if (user) {
       return res
         .status(409)
-        .send({ message: 'User with this email already exists.' });
+        .send({ message: "User with this email already exists." });
     }
 
     const salt = await bcrypt.genSalt(Number(process.env.SALT_KEY));
     const hashPassword = await bcrypt.hash(req.body.password, salt);
 
     await new User({ ...req.body, password: hashPassword }).save();
-    res.status(201).send({ message: 'User Created successfully.' });
+    res.status(201).send({ message: "User Created successfully." });
   } catch (error) {
-    res.status(500).send({ message: 'Internal Server Error' });
+    res.status(500).send({ message: "Internal Server Error" });
   }
 });
 

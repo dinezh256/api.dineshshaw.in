@@ -7,8 +7,11 @@ module.exports = () => {
   };
   try {
     mongoose.set("strictQuery", true);
-    mongoose.connect(process.env.MONGODB_URL, params);
-    console.log("Connected to DB successfully");
+    mongoose.connect(
+      process.env.MONGODB_URL,
+      params,
+      () => console.log("Connected to DB successfully")
+    );
   } catch (error) {
     console.log(error);
     console.log("Could not connect to DB");
