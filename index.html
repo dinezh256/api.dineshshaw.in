@@ -33,6 +33,15 @@
         background: var(---bgColor);
         margin: 0;
         -webkit-tap-highlight-color: var(---fadeColor);
+        animation: fadeIn 1s ease-in both;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
       }
       .verticalFade {
         position: fixed;
