@@ -10,6 +10,14 @@
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
       rel="stylesheet"
     />
+    <link rel="icon" href="./favicon.ico" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./favicon-32x32.png"
+    />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <style>
       .main {
         ---bgColor: #020024;
@@ -116,7 +124,7 @@
         );
         height: 100vh;
         top: 0;
-        left: calc(50% - 120px);
+        left: calc(50% - 140px);
         width: 1px;
         pointer-events: none;
         user-select: none;
@@ -126,7 +134,7 @@
 
       .lineVertical[data-side="right"] {
         left: auto;
-        right: calc(50% - 120px);
+        right: calc(50% - 140px);
       }
 
       .lineHorizontal {
@@ -149,22 +157,26 @@
         pointer-events: none;
         height: 44px;
       }
+
       .weblink {
         display: flex;
         align-items: center;
         justify-content: center;
         text-decoration: none;
       }
+
       .siteName {
         color: #2f94ff !important;
         font-style: italic;
         margin-block: 0;
         padding-right: 6px;
       }
+
       .liveImage {
         filter: hue-rotate(215deg);
         pointer-events: none;
       }
+
       .content {
         display: flex;
         align-items: center;
@@ -172,6 +184,18 @@
         flex-direction: column;
         gap: 10px;
         padding-top: 240px;
+      }
+
+      .footer {
+        position: absolute;
+        bottom: 60px;
+        display: flex;
+        align-items: center;
+      }
+
+      .website {
+        color: bisque;
+        text-decoration: none;
       }
     </style>
   </head>
@@ -187,9 +211,14 @@
       <span style="font-size: 20px; color: antiquewhite">Backend for</span>
       <a href="https://dineshshaw.in" class="weblink">
         <img class="siteLogo" src="./logo.svg" loading="eager" alt="D" />
-        <h1 class="siteName"><span style="display: none">D</span>inesh Shaw</h1>
+        <h1 class="siteName">
+          <span style="display: none">D</span>ineshShaw.in
+        </h1>
       </a>
       <img height="40" src="./giphy.gif" alt="LIVE" class="liveImage" />
     </div>
+    <footer class="footer">
+      <span class="website">api.dineshshaw.in</span>
+    </footer>
   </body>
 </html>
