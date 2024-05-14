@@ -14,6 +14,7 @@ dbConnection();
 
 app.use(express.json());
 app.use(cors());
+app.use(express.static(__dirname + '/public'));
 
 app.get("/", (_, res) => {
   res.sendFile(__dirname + "/index.html");
