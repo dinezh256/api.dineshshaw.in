@@ -3,6 +3,19 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 
+whitelist = ['https://api.dineshshaw.in', 'https://dineshshaw.in', 'https://www.dineshshaw.in']
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    console.log(origin)
+    if (whitelist.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error("Request from unauthorized origin"));
+    }
+  },
+};
+
 // const userRoutes = require("./routes/users");
 // const authRoutes = require("./routes/auth");
 const viewRoutes = require("./routes/view");
@@ -13,8 +26,10 @@ const app = express();
 dbConnection();
 
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.static(__dirname + '/public'));
+
+app.options('*', cors(corsOptions))
 
 app.get("/", (_, res) => {
   res.sendFile(__dirname + "/index.html");
