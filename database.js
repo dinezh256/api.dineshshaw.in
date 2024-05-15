@@ -1,5 +1,9 @@
 const mongoose = require("mongoose");
 
+const dbName = "portfolio"
+const uri = (process.env.NODE_ENV === "Dev" ? process.env.MONGODB_URL_LOCAL :
+  process.env.MONGODB_URL) + `/${dbName}`;
+
 module.exports = () => {
   const params = {
     useNewUrlParser: true,
@@ -8,7 +12,7 @@ module.exports = () => {
   try {
     mongoose.set("strictQuery", true);
     mongoose.connect(
-      process.env.MONGODB_URL,
+      uri,
       params,
       () => console.log("Connected to DB successfully")
     );

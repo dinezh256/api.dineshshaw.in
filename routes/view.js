@@ -4,12 +4,12 @@ const { View } = require("../models/view");
 
 const router = express.Router();
 
-router.put("/", (_, res) => {
+router.post("/:id", (req, res) => {
   try {
     View.findOneAndUpdate(
-      {},
+      { blogId: req.params.id },
       { $inc: { count: 1 } },
-      { new: true },
+      { new: true, upsert: true },
       (error, doc) => {
         if (error) {
           console.error("Error incrementing the views count", error);
@@ -27,9 +27,9 @@ router.put("/", (_, res) => {
   }
 });
 
-router.get("/", async (_, res) => {
+router.get("/:id", async (req, res) => {
   try {
-    const views = await View.findOne({});
+    const views = await View.findOne({ id: Number(req.params.id) });
     if (views.count) {
       res.status(200).send({ count: views.count });
     } else {
