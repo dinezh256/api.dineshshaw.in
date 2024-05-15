@@ -3,7 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 
-whitelist = ['https://api.dineshshaw.in', 'https://dineshshaw.in', 'https://www.dineshshaw.in']
+const whitelist = ['https://api.dineshshaw.in', 'https://dineshshaw.in', 'https://www.dineshshaw.in']
 
 const corsOptions = {
   origin: function (origin, callback) {
