@@ -9,7 +9,7 @@ const viewRoutes = require("./routes/view");
 const dbConnection = require("./database");
 const { isDevelopment } = require("./utils");
 
-const whitelist = ['https://api.dineshshaw.in', 'https://dineshshaw.in', 'https://www.dineshshaw.in']
+const whitelist = ['https://api.dineshshaw.in', 'https://dineshshaw.in', 'https://www.dineshshaw.in', 'http://localhost:3000']
 
 const corsOptions = {
   origin: function (origin, callback) {

@@ -29,7 +29,7 @@ router.post("/:id", (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try {
-    const views = await View.findOne({ id: Number(req.params.id) });
+    const views = await View.findOne({ blogId: Number(req.params.id) });
     if (views.count) {
       res.status(200).send({ count: views.count });
     } else {
