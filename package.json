@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node app.js",
     "watch-node": "nodemon app.js",
-    "dev": "NODE_ENV=Dev npm run watch-node"
+    "dev": "NODE_ENV=Dev pnpm run watch-node"
   },
   "author": "",
   "license": "ISC",

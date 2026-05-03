@@ -1,12 +1,19 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Dinesh Shaw - Backend</title>
-    <meta name="description" content="Backend for the portfolio" />
+    <meta
+      name="description"
+      content="Backend API for the portfolio of Dinesh Shaw"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
     <link
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&display=swap"
       rel="stylesheet"
@@ -21,30 +28,162 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="stylesheet" href="./index.css" />
   </head>
-  <body class="main">
-    <div aria-hidden="true" class="verticalFade"></div>
-    <div aria-hidden="true" class="horizontalFade" data-side="left"></div>
-    <div aria-hidden="true" class="horizontalFade" data-side="right"></div>
-    <div aria-hidden="true" class="lineVertical" data-side="left"></div>
-    <div aria-hidden="true" class="lineVertical" data-side="right"></div>
-    <div aria-hidden="true" class="lineHorizontal" data-side="top"></div>
-    <div aria-hidden="true" class="lineHorizontal" data-side="bottom"></div>
-    <div class="content">
-      <span style="font-size: 24px; color: antiquewhite">Backend for</span>
-      <a href="https://dineshshaw.in" class="weblink">
-        <img class="siteLogo" src="./logo.svg" loading="eager" alt="D" />
-        <h1 class="siteName"><span style="opacity: 0">D</span>ineshShaw.in</h1>
-      </a>
-      <span class="liveIndicator">LIVE</span>
-    </div>
+  <body>
+    <!-- Ambient background glow -->
+    <div class="glow glow--top" aria-hidden="true"></div>
+    <div class="glow glow--bottom" aria-hidden="true"></div>
+
+    <main class="wrapper">
+      <!-- Hero -->
+      <header class="hero">
+        <p class="hero-label">Backend for</p>
+        <a href="https://dineshshaw.in" class="hero-link">
+          <img class="hero-logo" src="./logo.svg" loading="eager" alt="D" />
+          <span class="hero-name"
+            ><span class="hero-name--hidden">D</span>ineshShaw.in</span
+          >
+        </a>
+        <span class="badge">
+          <span class="badge-dot"></span>
+          Live
+        </span>
+      </header>
+
+      <!-- API Docs -->
+      <section class="docs">
+        <div class="docs-header">
+          <h2 class="docs-title">API Reference</h2>
+          <div class="docs-base">
+            <span class="docs-base-label">Base URL</span>
+            <div class="copiable">
+              <code class="docs-base-url">https://api.dineshshaw.in</code>
+              <button class="copy-btn" data-copy="https://api.dineshshaw.in" aria-label="Copy base URL">
+                <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="docs-grid">
+          <article class="card">
+            <div class="card-head">
+              <span class="tag tag--get">GET</span>
+              <div class="copiable">
+                <code class="card-path">/</code>
+                <button class="copy-btn" data-copy="/" aria-label="Copy endpoint">
+                  <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                  <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </button>
+              </div>
+            </div>
+            <p class="card-desc">Returns this documentation page.</p>
+          </article>
+
+          <article class="card">
+            <div class="card-head">
+              <span class="tag tag--get">GET</span>
+              <div class="copiable">
+                <code class="card-path">/api/views/<span class="card-param">:id</span></code>
+                <button class="copy-btn" data-copy="/api/views/:id" aria-label="Copy endpoint">
+                  <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                  <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </button>
+              </div>
+            </div>
+            <p class="card-desc">
+              Retrieve the view count for a blog post by its numeric
+              <code>id</code>.
+            </p>
+            <div class="card-response">
+              <span class="card-response-label">200 Response</span>
+              <div class="copiable copiable--block">
+                <pre class="card-code">{ "count": 42 }</pre>
+                <button class="copy-btn copy-btn--block" data-copy='{ "count": 42 }' aria-label="Copy response">
+                  <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                  <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-head">
+              <span class="tag tag--post">POST</span>
+              <div class="copiable">
+                <code class="card-path">/api/views/<span class="card-param">:id</span></code>
+                <button class="copy-btn" data-copy="/api/views/:id" aria-label="Copy endpoint">
+                  <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                  <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </button>
+              </div>
+            </div>
+            <p class="card-desc">
+              Increment the view count for a blog post. Creates the entry if it
+              doesn't exist.
+            </p>
+            <div class="card-response">
+              <span class="card-response-label">200 Response</span>
+              <div class="copiable copiable--block">
+                <pre class="card-code">{
+  "message": "Views counter incremented",
+  "count": 43
+}</pre>
+                <button class="copy-btn copy-btn--block" data-copy='{ "message": "Views counter incremented", "count": 43 }' aria-label="Copy response">
+                  <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                  <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
     <footer class="footer">
       <a
         href="https://github.com/dinezh256/api.dineshshaw.in"
         target="_blank"
-        class="website"
+        class="footer-link"
       >
-        <span>api.dineshshaw.in</span></a
-      >
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <path
+            d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"
+          />
+        </svg>
+        <span>api.dineshshaw.in</span>
+      </a>
     </footer>
+
+    <script>
+      document.querySelectorAll(".copy-btn").forEach((btn) => {
+        btn.addEventListener("click", async () => {
+          const text = btn.dataset.copy;
+          try {
+            await navigator.clipboard.writeText(text);
+            btn.classList.add("copied");
+            setTimeout(() => btn.classList.remove("copied"), 1500);
+          } catch {
+            /* fallback for older browsers */
+            const ta = document.createElement("textarea");
+            ta.value = text;
+            ta.style.position = "fixed";
+            ta.style.opacity = "0";
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand("copy");
+            document.body.removeChild(ta);
+            btn.classList.add("copied");
+            setTimeout(() => btn.classList.remove("copied"), 1500);
+          }
+        });
+      });
+    </script>
   </body>
 </html>
