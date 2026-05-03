@@ -1,5 +1,5 @@
 import "dotenv/config";
-import express, { type Request, type Response, type NextFunction } from "express";
+import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import { fileURLToPath } from "url";
@@ -45,7 +45,7 @@ app.use(cors(corsOptions));
 app.use(express.static(join(__dirname, "../public")));
 
 // Routes
-app.get("/", (_: Request, res: Response) => {
+app.get("/", (_: express.Request, res: express.Response) => {
   res.sendFile(join(__dirname, "../index.html"));
 });
 
@@ -54,7 +54,7 @@ app.get("/", (_: Request, res: Response) => {
 app.use("/api/views", viewRoutes);
 
 // Global error handler
-app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
+app.use((err: any, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
   console.error("Unhandled error:", err.message);
   res.status(err.status || 500).send({
     message: isDevelopment ? err.message : "Internal Server Error",

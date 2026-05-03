@@ -1,4 +1,4 @@
-import express, { type Request, type Response } from "express";
+import express from "express";
 import rateLimit from "express-rate-limit";
 import { z } from "zod";
 import { View } from "../models/view.js";
@@ -24,7 +24,7 @@ const viewSchema = z.object({
 });
 
 // GET /api/views/:id — Retrieve view count
-router.get("/:id", validateRequest(viewSchema), async (req: Request, res: Response) => {
+router.get("/:id", validateRequest(viewSchema), async (req: express.Request, res: express.Response) => {
   const blogId = Number(req.params.id);
   const views = await View.findOne({ blogId });
 
@@ -38,7 +38,7 @@ router.get("/:id", validateRequest(viewSchema), async (req: Request, res: Respon
 });
 
 // POST /api/views/:id — Increment view count
-router.post("/:id", viewIncrementLimiter, validateRequest(viewSchema), async (req: Request, res: Response) => {
+router.post("/:id", viewIncrementLimiter, validateRequest(viewSchema), async (req: express.Request, res: express.Response) => {
   const blogId = Number(req.params.id);
   const doc = await View.findOneAndUpdate(
     { blogId },

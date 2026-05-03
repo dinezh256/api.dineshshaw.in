@@ -1,4 +1,4 @@
-import express, { type Request, type Response } from "express";
+import express from "express";
 import bcrypt from "bcryptjs";
 import { z } from "zod";
 import { User } from "../models/user.js";
@@ -21,7 +21,7 @@ const signupSchema = z.object({
   }),
 });
 
-router.post("/", validateRequest(signupSchema), async (req: Request, res: Response) => {
+router.post("/", validateRequest(signupSchema), async (req: express.Request, res: express.Response) => {
   const user = await User.findOne({ email: req.body.email });
 
   if (user) {
