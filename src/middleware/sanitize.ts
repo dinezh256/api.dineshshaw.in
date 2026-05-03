@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import type { Request, Response, NextFunction } from "express";
 
 const hasMongoOperators = (obj: any): boolean => {
   if (obj && typeof obj === "object") {
