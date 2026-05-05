@@ -9,7 +9,7 @@ export const incrementViewCountByBlogId = (blogId: number) => {
     { blogId },
     { $inc: { count: 1 }, $setOnInsert: { blogId } },
     {
-      new: true,
+      returnDocument: "after",
       upsert: true,
       setDefaultsOnInsert: true,
       projection: { _id: 0, count: 1 },
