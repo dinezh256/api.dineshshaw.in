@@ -1,8 +1,8 @@
-import express from "express";
-import { ZodSchema, ZodError } from "zod";
+import type { RequestHandler } from "express";
+import { z, ZodError } from "zod";
 
-export const validateRequest = (schema: ZodSchema) => {
-  return async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+export const validateRequest = (schema: z.ZodType) => {
+  const middleware: RequestHandler = async (req, res, next) => {
     try {
       const parsed = await schema.parseAsync({
         body: req.body,
@@ -30,4 +30,6 @@ export const validateRequest = (schema: ZodSchema) => {
       return res.status(500).send({ message: "Internal Server Error" });
     }
   };
+
+  return middleware;
 };

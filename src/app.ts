@@ -1,5 +1,5 @@
 import "dotenv/config";
-import express from "express";
+import express, { type ErrorRequestHandler, type Request, type Response } from "express";
 import cors from "cors";
 import helmet from "helmet";
 import { fileURLToPath } from "url";
@@ -44,7 +44,7 @@ export const createApp = () => {
   app.use("/api", apiRateLimiter);
 
   // Routes
-  app.get("/", (_: express.Request, res: express.Response) => {
+  app.get("/", (_: Request, res: Response) => {
     res.sendFile(join(__dirname, "../index.html"));
   });
 
@@ -57,7 +57,7 @@ export const createApp = () => {
   app.use("/api/views", viewRoutes);
 
   // Global error handler
-  app.use((err: unknown, req: express.Request, res: express.Response, _next: express.NextFunction) => {
+  const errorHandler: ErrorRequestHandler = (err, req, res, _next) => {
     const statusCode = err instanceof AppError ? err.statusCode : 500;
     const message =
       err instanceof Error && config.isDevelopment ? err.message : "Internal Server Error";
@@ -74,7 +74,9 @@ export const createApp = () => {
       message,
       requestId: req.requestId,
     });
-  });
+  };
+
+  app.use(errorHandler);
 
   return app;
 };

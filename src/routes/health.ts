@@ -1,9 +1,9 @@
-import express from "express";
+import express, { type Request, type Response } from "express";
 import { getDatabaseStatus } from "../database.js";
 
 const router = express.Router();
 
-router.get("/health", (_req, res) => {
+router.get("/health", (_req: Request, res: Response) => {
   res.status(200).send({
     status: "ok",
     uptimeSeconds: Math.round(process.uptime()),
@@ -11,7 +11,7 @@ router.get("/health", (_req, res) => {
   });
 });
 
-router.get("/ready", (_req, res) => {
+router.get("/ready", (_req: Request, res: Response) => {
   const database = getDatabaseStatus();
   const isReady = database.readyState === "connected";
 

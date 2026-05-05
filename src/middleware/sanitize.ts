@@ -1,4 +1,4 @@
-import express from "express";
+import type { RequestHandler } from "express";
 
 const hasMongoOperators = (obj: any): boolean => {
   if (obj && typeof obj === "object") {
@@ -27,7 +27,7 @@ const sanitize = (obj: any): any => {
   return obj;
 };
 
-export const mongoSanitize = (req: express.Request, res: express.Response, next: express.NextFunction) => {
+export const mongoSanitize: RequestHandler = (req, _res, next) => {
   if (req.body) {
     req.body = sanitize(req.body);
   }

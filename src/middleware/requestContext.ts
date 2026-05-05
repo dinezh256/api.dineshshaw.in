@@ -1,16 +1,8 @@
 import crypto from "crypto";
-import express from "express";
+import type { RequestHandler } from "express";
 import { logger } from "../logger.js";
 
-declare global {
-  namespace Express {
-    interface Request {
-      requestId: string;
-    }
-  }
-}
-
-export const requestContext = (req: express.Request, res: express.Response, next: express.NextFunction) => {
+export const requestContext: RequestHandler = (req, res, next) => {
   const requestId = req.header("x-request-id") || crypto.randomUUID();
   const startedAt = process.hrtime.bigint();
 
