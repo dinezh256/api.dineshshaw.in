@@ -1,1 +1,3 @@
-export const isDevelopment = process.env.NODE_ENV === "Dev";
+import { config } from "./config.js";
+
+export const isDevelopment = config.isDevelopment;

@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import { config } from "./config.js";
+import { logger } from "./logger.js";
 
 // Cache the connection on `global` so Vercel serverless warm invocations
 // reuse the same connection instead of creating a new one every time.
@@ -16,21 +18,21 @@ if (!cached) {
   cached = global._mongooseConnection = { conn: null, promise: null };
 }
 
-const dbName = "portfolio";
+const connectionStates: Record<number, string> = {
+  0: "disconnected",
+  1: "connected",
+  2: "connecting",
+  3: "disconnecting",
+};
 
 const connectDB = async () => {
   if (cached!.conn) return cached!.conn;
-
-  const uri =
-    (process.env.NODE_ENV === "Dev"
-      ? process.env.MONGODB_URL_LOCAL
-      : process.env.MONGODB_URL) +
-    `/${dbName}?retryWrites=true&w=majority&appName=Cluster0`;
+  const uri = `${config.mongoUri}/${config.dbName}?retryWrites=true&w=majority&appName=Cluster0`;
 
   if (!cached!.promise) {
     mongoose.set("strictQuery", true);
     cached!.promise = mongoose.connect(uri).then((m) => {
-      console.log("Connected to DB successfully");
+      logger.info("database_connected", { dbName: config.dbName });
       return m;
     });
   }
@@ -40,12 +42,18 @@ const connectDB = async () => {
   } catch (error) {
     cached!.promise = null;
     if (error instanceof Error) {
-      console.error("Could not connect to DB:", error.message);
+      logger.error("database_connection_failed", { error: error.message });
     }
     throw error;
   }
 
   return cached!.conn;
 };
+
+export const getDatabaseStatus = () => ({
+  readyState: connectionStates[mongoose.connection.readyState] ?? "unknown",
+  host: mongoose.connection.host || null,
+  name: mongoose.connection.name || config.dbName,
+});
 
 export default connectDB;

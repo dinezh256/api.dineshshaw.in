@@ -5,26 +5,23 @@ import helmet from "helmet";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 
-// import userRoutes from "./routes/users.js";
-// import authRoutes from "./routes/auth.js";
 import viewRoutes from "./routes/view.js";
-import connectDB from "./database.js";
-import { isDevelopment } from "./utils.js";
+import healthRoutes from "./routes/health.js";
+import userRoutes from "./routes/users.js";
+import authRoutes from "./routes/auth.js";
 import { mongoSanitize } from "./middleware/sanitize.js";
+import { config } from "./config.js";
+import { requestContext } from "./middleware/requestContext.js";
+import { logger } from "./logger.js";
+import { AppError } from "./errors.js";
+import { apiRateLimiter } from "./middleware/rateLimit.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const whitelist = [
-  "https://api.dineshshaw.in",
-  "https://dineshshaw.in",
-  "https://www.dineshshaw.in",
-  "http://localhost:3000",
-];
-
 const corsOptions: cors.CorsOptions = {
   origin: function (origin, callback) {
-    if (!origin || whitelist.includes(origin) || isDevelopment) {
+    if (!origin || config.corsOrigins.includes(origin) || config.isDevelopment) {
       callback(null, true);
     } else {
       callback(new Error("Request from unauthorized origin"));
@@ -32,38 +29,56 @@ const corsOptions: cors.CorsOptions = {
   },
 };
 
-const app = express();
+export const createApp = () => {
+  const app = express();
+  app.disable("x-powered-by");
+  app.set("trust proxy", config.trustProxyHops);
 
-// Connect to Database
-connectDB();
+  // Middleware
+  app.use(helmet());
+  app.use(requestContext);
+  app.use(mongoSanitize); // Prevent NoSQL Injection
+  app.use(express.json({ limit: config.jsonBodyLimit }));
+  app.use(cors(corsOptions));
+  app.use(express.static(join(__dirname, "../public")));
+  app.use("/api", apiRateLimiter);
 
-// Middleware
-app.use(helmet({ contentSecurityPolicy: false }));
-app.use(mongoSanitize); // Prevent NoSQL Injection
-app.use(express.json());
-app.use(cors(corsOptions));
-app.use(express.static(join(__dirname, "../public")));
-
-// Routes
-app.get("/", (_: express.Request, res: express.Response) => {
-  res.sendFile(join(__dirname, "../index.html"));
-});
-
-// app.use("/api/signup", userRoutes);
-// app.use("/api/login", authRoutes);
-app.use("/api/views", viewRoutes);
-
-// Global error handler
-app.use((err: any, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
-  console.error("Unhandled error:", err.message);
-  res.status(err.status || 500).send({
-    message: isDevelopment ? err.message : "Internal Server Error",
+  // Routes
+  app.get("/", (_: express.Request, res: express.Response) => {
+    res.sendFile(join(__dirname, "../index.html"));
   });
-});
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Listening on port: ${port}`);
-});
+  if (config.auth.enabled) {
+    app.use("/api/signup", userRoutes);
+    app.use("/api/login", authRoutes);
+  }
+
+  app.use("/", healthRoutes);
+  app.use("/api/views", viewRoutes);
+
+  // Global error handler
+  app.use((err: unknown, req: express.Request, res: express.Response, _next: express.NextFunction) => {
+    const statusCode = err instanceof AppError ? err.statusCode : 500;
+    const message =
+      err instanceof Error && config.isDevelopment ? err.message : "Internal Server Error";
+
+    logger.error("request_failed", {
+      requestId: req.requestId,
+      method: req.method,
+      path: req.originalUrl,
+      statusCode,
+      error: err instanceof Error ? err.message : "Unknown error",
+    });
+
+    res.status(statusCode).send({
+      message,
+      requestId: req.requestId,
+    });
+  });
+
+  return app;
+};
+
+const app = createApp();
 
 export default app;
